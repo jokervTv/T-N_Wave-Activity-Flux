@@ -113,4 +113,6 @@ and also the programs by Kazuaki Nishii @ University of Tokyo.
 Lai Sheng: laish12@lzu.edu.cn .
 You can also visit his site for more detail: http://500hpa.cn/pyinmet/tnflux/
 
-Yongpeng Zhang: zhangyp6603@outlook.com
+## Contributing 
+
+[Yongpeng Zhang](https://github.com/jokervTv)
