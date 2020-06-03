@@ -1,6 +1,9 @@
 # T-N Wave-Activity Flux
 
-Python scripts for caculating the `T-N Wave-Activity Flux` derived by `Takaya and Nakamura (JAS,2001)`.
+Caculating the `T-N Wave-Activity Flux` derived by `Takaya and Nakamura (JAS,2001)`.
+
+All computations are based on `numpy` arrays, which are very efficient.
+Partial differential terms in the formula are calculated by `numpy.gradient` in the central difference method.
 
 ## Introduction 
 
@@ -8,8 +11,76 @@ Takaya and Nakamura generalize the Plumb Wave-Activity Flux(Plumb,1985) so as to
 
 TN01 is of great advantage in climate monitoring and diagnosis.
 
->TN01 with improved meridional component based on Plumb Wave-Activity Flux is appropriate for analyzing Rossby waves in the zonally asymmetric westerly. And it reflect the evolution of long-waves which the E-P Flux can't. 
->(Shi Chunhua,2017)
+> TN01 with improved meridional component based on Plumb Wave-Activity Flux is appropriate for analyzing Rossby waves in the zonally asymmetric westerly. And it reflect the evolution of long-waves which the E-P Flux can't. 
+> (Shi Chunhua,2017)
+
+## Getting Started
+
+### Prerequisites
+
+* Python 3
+* numpy
+
+### Installation 
+
+by pip:
+
+```sh
+pip install tnflux
+```
+
+### Usage
+
+```py
+import tnflux
+...
+px, py = tnflux.tnf2d(u_c, v_c, phi_c, phi, lat, lon, p_lev) 
+```
+
+### Data & Process
+
+**tnf2d**
+
+Horizontal TN01 caltulation
+
+Parameters
+
+- `u_c` : array_like.  
+    climate average background of meridional wind.
+
+- `v_c` : array_like.  
+    climate average background of zonal wind.
+
+- `phi_c` : array_like.  
+    climate average background of geopotential.
+
+- `phi` : array_like.  
+    geopotential in the analysis period.
+
+- `lat` : array_like.  
+    latitude.
+    
+- `lon` : array_like.  
+    longitude.
+
+- `p_lev` : float.  
+    level.  
+    unit: hPa.
+
+Return
+
+- `px` for longitude direction
+- `py` for latitude direction
+
+Note
+
+Geopotential anomalies will be used to compute pertubation stream-function `psi_p` in Quasi-Geostrophic(QG) assumption:
+
+* `psi_p` = (`phi` - `phi_c`) / `f`  
+`f` is the Coriolis parameter: `f` = 2 \* omega \* sin(`lat`)
+
+*Input Data is Geopotential, NOT Geopotential Height!!!*  
+The re-analysis from NCEP/NCAR(NCEP1) is Geopotential Height, Geopotential Height multiplied by gravity `g` makes Geopotential.
 
 ## Formulation
 
@@ -22,41 +93,6 @@ And assuming the wave is stationary, so the Cu in Eq.38 would be zero.
 So the formula of horizontal T-N Wave-Activity Flux could yield as followed:
 
 ![eq38_hor](img/eq38_hor.jpg)
-
-## Programing
-
-We modified the GRADS script by Kazuaki Nishii into a Python3 version  
-(http://www.atmos.rcast.u-tokyo.ac.jp/nishii/programs/index.html)  
-
-* Python version
-    * Python 3
-* Computation
-    * numpy
-
-All computations are based on `numpy` arrays, which are very efficient.  
-Partial differential terms in the formula are calculated by `numpy.gradient` in the central difference method.  
-
-### Horizontal
-
-#### Data & Process
-
-Horizontal TN01 caltulation require the datas below:
-
-* Climatology average background of wind `U_c` and `V_c` and geopotential `phi_c`.
-* Geopotential in the analysis period `phi`.
-
-Geopotential anomalies will be used to compute pertubation stream-function `psi_p` in Quasi-Geostrophic(QG) assumption:
-
-* `psi_p` = (`pi` - `pi_c`) / `f`  
-`f` is the Coriolis parameter: `f` = 2 \* omega \* sin(`lat`)
-
-**Input Data is Geopotential, NOT Geopotential Height!!!**  
-The Re-analysis from NCEP/NCAR(NCEP1) is Geopotential Height, Geopotential Height multiplied by gravity `g` makes Geopotential.
-
-#### Output
-
-- `px` for longitude direction
-- `py` for latitude direction
 
 ## Reliability
 
