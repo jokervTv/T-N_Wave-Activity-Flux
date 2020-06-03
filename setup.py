@@ -16,7 +16,7 @@ setup(
     description='Caculating the T-N Wave Activity Flux derived by Takaya and Nakamura (JAS,2001).',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    author='Lai Sheng<laish12@lzu.edu.cn>, Yongpeng Zhang<zhangyp6603@outlook.com>',
+    author='Lai Sheng<laish12@lzu.edu.cn>',
     author_email='laish12@lzu.edu.cn',
     maintainer='Yongpeng Zhang',
     maintainer_email='zhangyp6603@outlook.com',
